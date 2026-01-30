@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bleach Episodes</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    select {
-      padding: 10px;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-    video {
-      width: 80%;
-      max-width: 800px;
-      border: 2px solid #444;
-      border-radius: 8px;
-      background-color: #000;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bleach (Tagalog Dubbed)</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+header {
+  background: #1c1c1c;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+label, input, button {
+  font-size: 16px;
+  margin: 5px;
+}
+video {
+  margin-top: 20px;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+}
+.error {
+  color: #ff4d4d;
+  margin-top: 10px;
+}
+a {
+  color: #ff4757;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+</style>
 </head>
 <body>
 
-  <h1>Bleach Episodes</h1>
+<header>Bleach (Tagalog Dubbed)</header>
 
-  <label for="episodeSelect">Select Episode:</label>
-  <select id="episodeSelect"></select>
+<div>
+  <label for="episode">Enter Episode (1-167):</label>
+  <input type="number" id="episode" min="1" max="167" value="1">
+  <button id="playBtn">Play</button>
+</div>
 
-  <video id="bleachPlayer" controls>
-    <source id="videoSource" src="" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+<div class="error" id="error"></div>
 
-  <script>
-    const episodeSelect = document.getElementById("episodeSelect");
-    const bleachPlayer = document.getElementById("bleachPlayer");
-    const videoSource = document.getElementById("videoSource");
+<video id="videoPlayer" controls></video>
 
-    // Populate dropdown with episodes 1-167
-    for (let i = 1; i <= 167; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.textContent = `Episode ${i}`;
-      episodeSelect.appendChild(option);
-    }
+<footer style="margin-top: 20px;">
+  <a href="index.html">← Back to Home</a>
+</footer>
 
-    // Load selected episode
-    async function loadEpisode(ep) {
-      try {
-        const res = await fetch(`/api/bleach/${ep}`);
-        if (!res.ok) throw new Error("Episode not found");
-        const data = await res.json();
-        videoSource.src = data.src;
-        bleachPlayer.load();
-        bleachPlayer.play();
-      } catch (err) {
-        alert(err.message);
-      }
-    }
+<script>
+const playBtn = document.getElementById("playBtn");
+const episodeInput = document.getElementById("episode");
+const videoPlayer = document.getElementById("videoPlayer");
+const errorDiv = document.getElementById("error");
 
-    // Load initial episode
-    loadEpisode(1);
+playBtn.addEventListener("click", () => {
+  const ep = parseInt(episodeInput.value);
+  if (!ep || ep < 1 || ep > 167) {
+    errorDiv.innerText = "Please enter a valid episode number (1-167).";
+    return;
+  }
+  errorDiv.innerText = "";
 
-    // Change episode on dropdown change
-    episodeSelect.addEventListener("change", (e) => {
-      const ep = e.target.value;
-      loadEpisode(ep);
+  fetch(`/api/bleach/${ep}`)
+    .then(res => {
+      if (!res.ok) throw new Error("Episode not found");
+      return res.json();
+    })
+    .then(data => {
+      videoPlayer.src = data.src;
+      videoPlayer.play();
+      videoPlayer.scrollIntoView({ behavior: "smooth" });
+    })
+    .catch(err => {
+      errorDiv.innerText = err.message;
     });
-  </script>
+});
+</script>
 
 </body>
 </html>

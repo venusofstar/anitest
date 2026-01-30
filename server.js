@@ -46,16 +46,22 @@ app.get("/api/blackclover/:ep", (req, res) => {
 
 // Bleach
 app.get("/api/bleach/:ep", (req, res) => {
-  const ep = parseInt(req.params.ep);
-  if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
+  const ep = parseInt(req.params.ep, 10);
+  if (!ep || ep < 1 || ep > 167) {
+    return res.status(404).json({ error: "Episode not found" });
+  }
 
   let src = "";
-  if (ep <= 10) {
+
+  // Episodes 1–9 (zero-padded)
+  if (ep >= 1 && ep <= 9) {
     src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${ep}.mp4`;
-  } else if (ep <= 11) {
+
+  // Episodes 10–167
+  } else {
     src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%20${ep}.mp4`;
   }
-  
+
   res.json({ src });
 });
 

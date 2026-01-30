@@ -3,97 +3,82 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bleach (Tagalog Dubbed)</title>
+<title>Bleach| Anime Player</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0f0f0f;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-header {
-  background: #1c1c1c;
-  width: 100%;
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-label, input, button {
-  font-size: 16px;
-  margin: 5px;
-}
-video {
-  margin-top: 20px;
-  width: 90%;
-  max-width: 900px;
-  border-radius: 8px;
-  border: 2px solid #fff;
-}
-.error {
-  color: #ff4d4d;
-  margin-top: 10px;
-}
-a {
-  color: #ff4757;
-  text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
+body { margin:0; background:#0f0f0f; color:#fff; font-family:Arial, Helvetica, sans-serif; }
+header { background:#1c1c1c; padding:15px; text-align:center; font-size:22px; font-weight:bold; }
+.container { max-width:1000px; margin:auto; padding:10px; }
+video { width:100%; background:#000; border-radius:10px; outline:none; }
+.episode-list { margin-top:15px; display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:10px; }
+.episode { background:#1e1e1e; padding:10px; text-align:center; border-radius:6px; cursor:pointer; transition:0.2s; font-size:14px; }
+.episode:hover { background:#ff4757; }
+.episode.active { background:#ff4757; }
+footer { text-align:center; padding:10px; font-size:12px; color:#aaa; }
+a { color:#ff4757; text-decoration:none; }
+a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
 
 <header>Bleach (Tagalog Dubbed)</header>
 
-<div>
-  <label for="episode">Enter Episode (1-167):</label>
-  <input type="number" id="episode" min="1" max="167" value="1">
-  <button id="playBtn">Play</button>
+<div class="container">
+  <video id="player" controls autoplay></video>
+  <div class="episode-list" id="episodeList"></div>
 </div>
 
-<div class="error" id="error"></div>
-
-<video id="videoPlayer" controls></video>
-
-<footer style="margin-top: 20px;">
-  <a href="index.html">← Back to Home</a>
-</footer>
+<footer><a href="index.html">⬅ Back to Home</a> | © Anime Series Player</footer>
 
 <script>
-const playBtn = document.getElementById("playBtn");
-const episodeInput = document.getElementById("episode");
-const videoPlayer = document.getElementById("videoPlayer");
-const errorDiv = document.getElementById("error");
-
-playBtn.addEventListener("click", () => {
-  const ep = parseInt(episodeInput.value);
-  if (!ep || ep < 1 || ep > 167) {
-    errorDiv.innerText = "Please enter a valid episode number (1-167).";
-    return;
-  }
-  errorDiv.innerText = "";
-
-  fetch(`/api/bleach/${ep}`)
-    .then(res => {
-      if (!res.ok) throw new Error("Episode not found");
-      return res.json();
-    })
-    .then(data => {
-      videoPlayer.src = data.src;
-      videoPlayer.play();
-      videoPlayer.scrollIntoView({ behavior: "smooth" });
-    })
-    .catch(err => {
-      errorDiv.innerText = err.message;
-    });
+// Disable right-click and DevTools
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => { 
+  if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&e.key==='I')) e.preventDefault(); 
 });
+
+const player = document.getElementById("player");
+const episodeList = document.getElementById("episodeList");
+
+// Black Clover episode list (from server.js API)
+const totalEpisodes = 167; // Update this if more episodes are added
+
+// Highlight active episode
+function highlightEpisode(ep) {
+  document.querySelectorAll(".episode").forEach(e => e.classList.remove("active"));
+  const el = document.getElementById("ep" + ep);
+  if(el) el.classList.add("active");
+}
+
+// Load episode from server.js API
+async function loadEpisode(ep) {
+  try {
+    const res = await fetch(`/api/bleach/${ep}`);
+    const data = await res.json();
+    if(data.src){
+      player.src = data.src;
+      player.play();
+      highlightEpisode(ep);
+    } else {
+      alert("Episode not found");
+    }
+  } catch(err) {
+    console.error(err);
+    alert("Episode not found");
+  }
+}
+
+// Generate episode buttons
+for(let i=1; i<=totalEpisodes; i++){
+  const div = document.createElement("div");
+  div.className = "episode";
+  div.id = "ep" + i;
+  div.innerText = "Episode " + i;
+  div.onclick = () => loadEpisode(i);
+  episodeList.appendChild(div);
+}
+
+// Auto-load first episode
+loadEpisode(1);
 </script>
 
 </body>

@@ -35,10 +35,18 @@ app.get("/api/blackclover/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 102) return res.status(404).json({ error: "Episode not found" });
 
-  // Pad episode number to 2 digits
   const epStr = ep.toString().padStart(2, "0");
-
   const src = `https://file.garden/Z5iMyklJBX3zDDC5/BClover/Black%20Clover%20S1-Ep${epStr}.mp4`;
+
+  res.json({ src });
+});
+
+// Bleach (1-167)
+app.get("/api/bleach/:ep", (req, res) => {
+  const ep = parseInt(req.params.ep);
+  if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
+
+  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%20${ep}.mp4`;
 
   res.json({ src });
 });

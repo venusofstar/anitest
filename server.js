@@ -4,10 +4,10 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files
+// Serve static files from 'public' folder
 app.use(express.static(path.join(__dirname, "public")));
 
-// API endpoint (PROTECTED LINKS)
+// API endpoint to fetch episode URL
 app.get("/api/episode/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   let url = "";
@@ -25,11 +25,8 @@ app.get("/api/episode/:ep", (req, res) => {
     return res.status(404).json({ error: "Episode not found" });
   }
 
-  // Send URL only when requested
   res.json({ src: url });
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));

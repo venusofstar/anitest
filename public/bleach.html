@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bleach Episodes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    video {
+      width: 80%;
+      max-width: 800px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bleach Episodes</h1>
+
+  <label for="episodeSelect">Select Episode:</label>
+  <select id="episodeSelect"></select>
+
+  <video id="bleachPlayer" controls>
+    <source id="videoSource" src="" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <script>
+    const episodeSelect = document.getElementById("episodeSelect");
+    const bleachPlayer = document.getElementById("bleachPlayer");
+    const videoSource = document.getElementById("videoSource");
+
+    // Populate dropdown with episodes 1-167
+    for (let i = 1; i <= 167; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = `Episode ${i}`;
+      episodeSelect.appendChild(option);
+    }
+
+    // Load selected episode
+    async function loadEpisode(ep) {
+      try {
+        const res = await fetch(`/api/bleach/${ep}`);
+        if (!res.ok) throw new Error("Episode not found");
+        const data = await res.json();
+        videoSource.src = data.src;
+        bleachPlayer.load();
+        bleachPlayer.play();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    // Load initial episode
+    loadEpisode(1);
+
+    // Change episode on dropdown change
+    episodeSelect.addEventListener("change", (e) => {
+      const ep = e.target.value;
+      loadEpisode(ep);
+    });
+  </script>
+
+</body>
+</html>

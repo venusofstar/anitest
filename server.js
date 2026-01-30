@@ -4,22 +4,19 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Enable CORS for all routes
+// Enable CORS
 app.use(cors());
 
-// Serve static files from the "public" folder
+// Serve all files in public
 app.use(express.static(path.join(__dirname, "public")));
 
-// Simple homepage
+// Optional: redirect root to index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// -------------------
-// Episode APIs
-// -------------------
-
-// Hunter X Hunter (1-148)
+// Your APIs here
+// e.g., Hunter X Hunter
 app.get("/api/hxh/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 148) return res.status(404).json({ error: "Episode not found" });
@@ -36,7 +33,7 @@ app.get("/api/hxh/:ep", (req, res) => {
   res.json({ src });
 });
 
-// Black Clover (1-102)
+// Black Clover
 app.get("/api/blackclover/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 102) return res.status(404).json({ error: "Episode not found" });
@@ -47,23 +44,16 @@ app.get("/api/blackclover/:ep", (req, res) => {
   res.json({ src });
 });
 
-// Bleach (1-167)
+// Bleach
 app.get("/api/bleach/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
 
-  // Removed weird encoding for safer URLs
   const src = `https://dn720401.ca.archive.org/0/items/bleach-episode-${ep}/Bleach%20Episode%20${ep}.mp4`;
-
   res.json({ src });
 });
 
-// Catch-all 404 for undefined routes
-app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
-
-// Start the server
+// Start server
 app.listen(port, () => {
   console.log(`Anime server running at http://localhost:${port}`);
 });

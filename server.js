@@ -47,10 +47,9 @@ app.get("/api/blackclover/:ep", (req, res) => {
 // Bleach
 app.get("/api/bleach/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
-  if (!ep || ep < 1 || ep > 102) return res.status(404).json({ error: "Episode not found" });
+  if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
 
-  const epStr = ep.toString().padStart(2, "0");
-  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${epStr}.mp4`;
+  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${ep}.mp4`;
   res.json({ src });
 });
 

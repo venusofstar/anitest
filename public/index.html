@@ -2,80 +2,32 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anime Tagalog Dubbed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0f0f0f;
-  color: #fff;
-}
-
-/* HEADER */
+body { margin:0; font-family:Arial; background:#0f0f0f; color:#fff; }
 header {
-  background: #000;
-  padding: 18px;
-  text-align: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: #f1c40f;
+  background:#000; padding:18px; text-align:center;
+  font-size:26px; font-weight:bold; color:#f1c40f;
 }
-
-/* CATEGORY TITLE */
-.category-title {
-  max-width: 1200px;
-  margin: 25px auto 10px;
-  padding: 0 15px;
-  font-size: 22px;
-  font-weight: bold;
-  color: #f1c40f;
+.category {
+  max-width:1200px; margin:25px auto 10px;
+  padding:0 15px; font-size:22px;
+  color:#f1c40f; font-weight:bold;
 }
-
-/* GRID */
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 15px 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 18px;
+.grid {
+  max-width:1200px; margin:auto; padding:0 15px 30px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
+  gap:18px;
 }
-
-/* CARD */
-.anime-card {
-  background: #1c1c1c;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.3s;
+.card {
+  background:#1c1c1c; border-radius:10px;
+  overflow:hidden; cursor:pointer; transition:.3s;
 }
-
-.anime-card img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-}
-
-.anime-card:hover {
-  transform: scale(1.05);
-  outline: 2px solid #f1c40f;
-}
-
-.anime-card h3 {
-  padding: 10px;
-  font-size: 15px;
-  text-align: center;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 12px;
-  color: #aaa;
-}
+.card:hover { transform:scale(1.05); outline:2px solid #f1c40f; }
+.card img { width:100%; height:250px; object-fit:cover; }
+.card h3 { padding:10px; font-size:14px; text-align:center; }
 </style>
 </head>
 
@@ -83,46 +35,45 @@ footer {
 
 <header>ANIME TAGALOG DUBBED</header>
 
-<!-- ================= ANIME MOVIES ================= -->
-<div class="category-title">Anime Movies</div>
-<div class="container">
-
-  <div class="anime-card" onclick="location.href='yourname.html'">
-    <img src="https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png">
-    <h3>Your Name (Tagalog Dubbed)</h3>
-  </div>
-
-  <div class="anime-card" onclick="location.href='a-silent-voice.html'">
+<!-- ================= MOVIES ================= -->
+<div class="category">Anime Movies</div>
+<div class="grid">
+  <div class="card" onclick="openMovie('silentvoice')">
     <img src="https://upload.wikimedia.org/wikipedia/en/3/32/A_Silent_Voice_Film_Poster.jpg">
-    <h3>A Silent Voice (Tagalog Dubbed)</h3>
+    <h3>A Silent Voice</h3>
   </div>
-
+  <div class="card" onclick="openMovie('yourname')">
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/0b/Your_Name_poster.png">
+    <h3>Your Name</h3>
+  </div>
+  <div class="card" onclick="openMovie('weathering')">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/66/Weathering_with_You_Poster.jpg">
+    <h3>Weathering With You</h3>
+  </div>
 </div>
 
-<!-- ================= ANIME SERIES ================= -->
-<div class="category-title">Anime Series</div>
-<div class="container">
-
-  <div class="anime-card" onclick="location.href='hunterxhunter.html'">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe1c0BbttBo95dsdwPNAqjfN8F4ltEzcS1gLoAiiIqFFuqATEW-f6H5cRE84O4vDX10dYHhGPCH5qovibzFZ9UC_k8Qi34LNoTZ1XpXA&s=10">
-    <h3>Hunter X Hunter (Tagalog Dubbed)</h3>
+<!-- ================= SERIES ================= -->
+<div class="category">Anime Series</div>
+<div class="grid">
+  <div class="card" onclick="location.href='hunterxhunter.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/Hunter_x_Hunter_2011.png">
+    <h3>Hunter X Hunter</h3>
   </div>
-
-  <div class="anime-card" onclick="location.href='blackclover.html'">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5yqZV0vGtEhI003iu4znbxYTXuN5rSnNwRuB2oJPB5A&s=10">
-    <h3>Black Clover (Tagalog Dubbed)</h3>
+  <div class="card" onclick="location.href='blackclover.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/69/Black_Clover_volume_1_cover.jpg">
+    <h3>Black Clover</h3>
   </div>
-
-  <div class="anime-card" onclick="location.href='bleach.html'">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxMZ7P5mOcmM9BzY-vyH7hY9lZK8k2yZ5V8g&s=10">
-    <h3>Bleach (Tagalog Dubbed)</h3>
+  <div class="card" onclick="location.href='bleach.html'">
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/72/Bleachanime.png">
+    <h3>Bleach</h3>
   </div>
-
 </div>
 
-<footer>
-© 2026 Anime Streaming Website
-</footer>
+<script>
+function openMovie(id) {
+  location.href = `movie-player.html?id=${id}`;
+}
+</script>
 
 </body>
 </html>

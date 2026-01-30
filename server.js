@@ -1,13 +1,19 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Enable CORS for all routes
 app.use(cors());
 
-// Serve static files from the public folder
-app.use(express.static("public"));
+// Serve static files from the "public" folder
+app.use(express.static(path.join(__dirname, "public")));
+
+// Simple homepage
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // -------------------
 // Episode APIs
@@ -46,14 +52,16 @@ app.get("/api/bleach/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
 
-  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%20${ep}.mp4`;
+  // Removed weird encoding for safer URLs
+  const src = `https://dn720401.ca.archive.org/0/items/bleach-episode-${ep}/Bleach%20Episode%20${ep}.mp4`;
 
   res.json({ src });
 });
 
-// -------------------
-// Other anime APIs can be added here
-// -------------------
+// Catch-all 404 for undefined routes
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
 
 // Start the server
 app.listen(port, () => {

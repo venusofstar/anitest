@@ -1,0 +1,16 @@
+<script>
+const player = document.getElementById("player");
+
+async function loadEpisode(ep) {
+  try {
+    const res = await fetch(`/api/episode/${ep}`);
+    const data = await res.json();
+
+    player.src = data.src;
+    player.play();
+    highlightEpisode(ep);
+  } catch {
+    alert("Episode unavailable");
+  }
+}
+</script>

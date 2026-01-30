@@ -49,7 +49,13 @@ app.get("/api/bleach/:ep", (req, res) => {
   const ep = parseInt(req.params.ep);
   if (!ep || ep < 1 || ep > 167) return res.status(404).json({ error: "Episode not found" });
 
-  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${ep}.mp4`;
+  let src = "";
+  if (ep <= 10) {
+    src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${ep}.mp4`;
+  } else if (ep <= 11) {
+    src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%20${ep}.mp4`;
+  }
+  
   res.json({ src });
 });
 

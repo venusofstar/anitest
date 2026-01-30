@@ -5,16 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anime Streaming Website</title>
 <style>
-body { margin:0; font-family:Arial, Helvetica, sans-serif; background:#0f0f0f; color:#fff; }
-header { background:#1c1c1c; padding:20px; text-align:center; font-size:24px; font-weight:bold; }
-.container { max-width:1200px; margin:auto; padding:20px; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; }
-.anime-card { background:#1e1e1e; border-radius:8px; overflow:hidden; cursor:pointer; transition:0.3s; text-align:center; }
-.anime-card img { width:100%; display:block; }
-.anime-card:hover { transform:scale(1.05); }
-.anime-card h3 { padding:10px; font-size:18px; }
-footer { text-align:center; padding:15px; font-size:12px; color:#aaa; }
-a { color:#ff4757; text-decoration:none; }
-a:hover { text-decoration:underline; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0f0f0f;
+  color: #fff;
+}
+header {
+  background: #1c1c1c;
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+.anime-card {
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+.anime-card img {
+  width: 100%;
+  display: block;
+}
+.anime-card:hover {
+  transform: scale(1.05);
+}
+.anime-card h3 {
+  padding: 10px;
+  font-size: 18px;
+}
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 12px;
+  color: #aaa;
+}
+a {
+  color: #ff4757;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -25,7 +68,10 @@ a:hover { text-decoration:underline; }
   <!-- Anime cards rendered dynamically -->
 </div>
 
-<footer>© 2026 Anime Streaming Website | Visit: <a href="https://anitest2-cloudf.pages.dev/" target="_blank">anitest2-cloudf.pages.dev</a></footer>
+<footer>
+  © 2026 Anime Streaming Website | Visit: 
+  <a href="https://anitest2-cloudf.pages.dev/" target="_blank">anitest2-cloudf.pages.dev</a>
+</footer>
 
 <script>
 // List of anime to render
@@ -36,21 +82,19 @@ const animeList = [
     link: "hunterxhunter.html"
   },
   {
-    title: "Black Clover (Tagalog Dubbed",
+    title: "Black Clover (Tagalog Dubbed)",
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5yqZV0vGtEhI003iu4znbxYTXuN5rSnNwRuB2oJPB5A&s=10",
     link: "blackclover.html"
   },
   {
-    title: "Bleach (Tagalog Dubbed",
+    title: "Bleach (Tagalog Dubbed)",
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5yqZV0vGtEhI003iu4znbxYTXuN5rSnNwRuB2oJPB5A&s=10",
     link: "bleach.html"
-  },
-  // Add more anime here as objects
+  }
 ];
 
-const container = document.getElementById("animeContainer");
-
 // Render anime cards dynamically
+const container = document.getElementById("animeContainer");
 animeList.forEach(anime => {
   const card = document.createElement("div");
   card.className = "anime-card";

@@ -84,6 +84,18 @@ app.get("/api/bleach/:ep", (req, res) => {
   res.json({ src });
 });
 
+// Doraemon story
+app.get("/api/doraemonseries/:ep", (req, res) => {
+  const ep = parseInt(req.params.ep);
+  if (!ep || ep < 1 || ep > 102) return res.status(404).json({ error: "Episode not found" });
+
+  const epStr = ep.toString().padStart(2, "0");
+  const src = `https://dn720308.ca.archive.org/0/items/draem-0-n-32/DRaem0N-${epStr}.mp4`;
+  res.json({ src });
+});
+
+
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

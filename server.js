@@ -23,11 +23,11 @@ app.get("/api/hxh/:ep", (req, res) => {
 
   let src = "";
   if (ep <= 60) {
-    src = `https://dn720706.ca.archive.org/0/items/anime-2.0-5/HunterXHunter-${ep}.mp4`;
+    src = `https://dn720706.ca.archive.org/0/items/anime-2.0-5/%F0%9D%97%94%F0%9D%97%BB%F0%9D%97%B6%F0%9D%97%BA%F0%9D%97%B2%20%F0%9D%9F%AE.%F0%9D%9F%AC%20-%20${ep}.mp4`;
   } else if (ep <= 100) {
-    src = `https://ia601504.us.archive.org/10/items/anime-2.0-100/HunterXHunter-${ep}.mp4`;
+    src = `https://ia601504.us.archive.org/10/items/anime-2.0-100/%F0%9D%97%94%F0%9D%97%BB%F0%9D%97%B6%F0%9D%97%BA%F0%9D%97%B2%20%F0%9D%9F%AE.%F0%9D%9F%AC%20-%20${ep}.mp4`;
   } else {
-    src = `https://ia801509.us.archive.org/29/items/anime-2.0-114/HunterXHunter-${ep}.mp4`;
+    src = `https://ia801509.us.archive.org/29/items/anime-2.0-114/%F0%9D%97%94%F0%9D%97%BB%F0%9D%97%B6%F0%9D%97%BA%F0%9D%97%B2%20%F0%9D%9F%AE.%F0%9D%9F%AC%20-%20${ep}.mp4`;
   }
 
   res.json({ src });
@@ -50,7 +50,7 @@ app.get("/api/bleach/:ep", (req, res) => {
   if (!ep || ep < 1 || ep > 102) return res.status(404).json({ error: "Episode not found" });
 
   const epStr = ep.toString().padStart(2, "0");
-  const src = `https://dn720401.ca.archive.org/0/items/bleach-episode-166/Bleach%20Episode%20${epStr}.mp4`;
+  const src = `https://dn720401.ca.archive.org/0/items/ble-ach-episode-166/BL%E1%B4%87ACh%20Episode%200${epStr}.mp4`;
   res.json({ src });
 });
 

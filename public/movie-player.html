@@ -5,13 +5,26 @@
 <title>Movie Player</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Critical CSS only -->
+<!-- Security headers (works best on Cloudflare Pages) -->
+<meta http-equiv="Content-Security-Policy"
+content="
+default-src 'self';
+media-src 'self';
+connect-src 'self';
+script-src 'self';
+style-src 'self' 'unsafe-inline';
+">
+
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Cache-Control" content="no-store">
+
 <style>
 html,body{
   margin:0;
   background:#000;
   color:#fff;
   font-family:system-ui,-apple-system,Arial,sans-serif;
+  user-select:none;
 }
 h2{
   margin:0;
@@ -39,9 +52,38 @@ video{
   muted
   playsinline
   preload="metadata"
+  controlsList="nodownload noremoteplayback"
+  disablePictureInPicture
 ></video>
 
-<script defer>
+<script>
+/* ------------------------
+   BASIC ANTI-INSPECTION
+------------------------- */
+document.addEventListener("contextmenu", e => e.preventDefault());
+document.addEventListener("dragstart", e => e.preventDefault());
+
+document.addEventListener("keydown", e => {
+  if (
+    e.key === "F12" ||
+    (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) ||
+    (e.ctrlKey && e.key === "U")
+  ) {
+    e.preventDefault();
+  }
+});
+
+// DevTools detection (soft)
+setInterval(() => {
+  if (window.outerWidth - window.innerWidth > 160 ||
+      window.outerHeight - window.innerHeight > 160) {
+    document.body.innerHTML = "";
+  }
+}, 1000);
+
+/* ------------------------
+   PLAYER LOGIC
+------------------------- */
 (() => {
   const title = document.getElementById("title");
   const player = document.getElementById("player");
@@ -56,7 +98,10 @@ video{
 
   fetch(`/api/movie/${id}`, {
     signal: controller.signal,
-    cache: "force-cache"
+    headers: {
+      "X-Requested-With": "MoviePlayer",
+      "Cache-Control": "no-store"
+    }
   })
   .then(r => r.ok ? r.json() : Promise.reject())
   .then(({ title: t, src }) => {
@@ -68,7 +113,6 @@ video{
     title.textContent = "Movie not found";
   });
 
-  // Stop network if user leaves page
   addEventListener("beforeunload", () => controller.abort());
 })();
 </script>

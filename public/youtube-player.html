@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Movie Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+html, body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+iframe {
+  width: 100%;
+  height: 90vh;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<h2>The Bad Guys (Tagalog Dubbed)</h2>
+
+<iframe
+  id="yt"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
+
+<script>
+const id = new URLSearchParams(location.search).get("v");
+if (id) {
+  document.getElementById("yt").src =
+    `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+}
+</script>
+
+</body>
+</html>

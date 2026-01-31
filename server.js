@@ -88,12 +88,11 @@ app.get("/api/bleach/:ep", (req, res) => {
 app.get("/api/doraemonseries/:ep", (req, res) => {
   const ep = Number(req.params.ep);
 
-  if (Number.isNaN(ep) || ep < 1 || ep > 60) {
+  if (!Number.isInteger(ep) || ep < 1 || ep > 60) {
     return res.status(404).json({ error: "Episode not found" });
   }
 
-  const epStr = String(ep).padStart(2, "0");
-  const src = `https://dn720308.ca.archive.org/0/items/draem-0-n-32/DRaem0N-${epStr}.mp4`;
+  const src = `https://dn720308.ca.archive.org/0/items/draem-0-n-32/DRaem0N-${ep}.mp4`;
 
   res.json({ src });
 });

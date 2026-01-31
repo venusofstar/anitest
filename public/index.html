@@ -156,46 +156,54 @@ function openYouTubePlayer(videoId) {
 }
 </script>
 
-  <!-- ✅ Safe Monetag Ads: Load After User Interaction -->
-  <script>
-    let monetagLoaded = false;
-    document.addEventListener("click", () => {
-      if (!monetagLoaded) {
-        monetagLoaded = true;
-        console.log("✅ Loading Monetag Ads safely...");
+<!-- ================= ADS / MONETAG (SAFE LOAD) ================= -->
 
-        // Popunder
-        (function(s){
-          s.dataset.zone='10547491';
-          s.src='https://al5sm.com/tag.min.js';
-          document.body.appendChild(s);
-        })(document.createElement('script'));
+<!-- Monetag Banner / Pop -->
+<script src="https://quge5.com/88/tag.min.js"
+        data-zone="207250"
+        async
+        data-cfasync="false"></script>
 
-        // Vignette
-        (function(s){
-          s.dataset.zone='10547497';
-          s.src='https://gizokraijaw.net/vignette.min.js';
-          document.body.appendChild(s);
-        })(document.createElement('script'));
+<!-- Monetag Push / Direct -->
+<script>
+(function () {
+  const s = document.createElement("script");
+  s.src = "https://al5sm.com/tag.min.js";
+  s.dataset.zone = "10547491";
+  s.async = true;
+  s.setAttribute("data-cfasync", "false");
+  document.body.appendChild(s);
+})();
+</script>
 
-      }
-    });
-  </script>
+<!-- Monetag Vignette (fullscreen on navigation) -->
+<script>
+(function () {
+  const s = document.createElement("script");
+  s.src = "https://gizokraijaw.net/vignette.min.js";
+  s.dataset.zone = "10547497";
+  s.async = true;
+  s.setAttribute("data-cfasync", "false");
+  document.body.appendChild(s);
+})();
+</script>
 
-  <!-- ✅ Fallback Monetag Banner -->
-  <noscript>
-    <a href="https://al5sm.com/" target="_blank">
-      <img src="https://i.imgur.com/8T3YF0Z.jpeg" alt="Watch Ad" style="width:100%;border-radius:12px;">
-    </a>
-  </noscript>
+<!-- Monetag Interstitial -->
+<script>
+(function () {
+  const s = document.createElement("script");
+  s.src = "https://nap5k.com/tag.min.js";
+  s.dataset.zone = "10547537";
+  s.async = true;
+  s.setAttribute("data-cfasync", "false");
+  document.body.appendChild(s);
+})();
+</script>
 
-  <!-- ✅ Performance Debug Log -->
-  <script>
-    window.addEventListener('load', () => {
-      console.log("✅ Anime Tagalog Dubbed (Monetag Edition) loaded in", performance.now().toFixed(1), "ms");
-    });
-  </script>
-
+<!-- Monetag Backup -->
+<script src="https://3nbf4.com/act/files/tag.min.js?z=10547542"
+        async
+        data-cfasync="false"></script>
 
 </body>
 </html>

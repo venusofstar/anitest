@@ -1,121 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Movie Player</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+Protect
 
-<!-- Security headers (works best on Cloudflare Pages) -->
-<meta http-equiv="Content-Security-Policy"
-content="
-default-src 'self';
-media-src 'self';
-connect-src 'self';
-script-src 'self';
-style-src 'self' 'unsafe-inline';
-">
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<title>Movie Player</title>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Critical CSS only -->  <style>  
+html,body{  
+  margin:0;  
+  background:#000;  
+  color:#fff;  
+  font-family:system-ui,-apple-system,Arial,sans-serif;  
+}  
+h2{  
+  margin:0;  
+  padding:10px;  
+  text-align:center;  
+  font-size:16px;  
+}  
+video{  
+  width:100%;  
+  height:90vh;  
+  background:#000;  
+  display:block;  
+}  
+</style>  </head>  <body>  <h2 id="title">Loading…</h2>  <video
+id="player"
+controls
+autoplay
+muted
+playsinline
+preload="metadata"
 
-<meta name="referrer" content="no-referrer">
-<meta http-equiv="Cache-Control" content="no-store">
+> </video>  
 
-<style>
-html,body{
-  margin:0;
-  background:#000;
-  color:#fff;
-  font-family:system-ui,-apple-system,Arial,sans-serif;
-  user-select:none;
-}
-h2{
-  margin:0;
-  padding:10px;
-  text-align:center;
-  font-size:16px;
-}
-video{
-  width:100%;
-  height:90vh;
-  background:#000;
-  display:block;
-}
-</style>
-</head>
-
-<body>
-
-<h2 id="title">Loading…</h2>
-
-<video
-  id="player"
-  controls
-  autoplay
-  muted
-  playsinline
-  preload="metadata"
-  controlsList="nodownload noremoteplayback"
-  disablePictureInPicture
-></video>
-
-<script>
-/* ------------------------
-   BASIC ANTI-INSPECTION
-------------------------- */
-document.addEventListener("contextmenu", e => e.preventDefault());
-document.addEventListener("dragstart", e => e.preventDefault());
-
-document.addEventListener("keydown", e => {
-  if (
-    e.key === "F12" ||
-    (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) ||
-    (e.ctrlKey && e.key === "U")
-  ) {
-    e.preventDefault();
-  }
-});
-
-// DevTools detection (soft)
-setInterval(() => {
-  if (window.outerWidth - window.innerWidth > 160 ||
-      window.outerHeight - window.innerHeight > 160) {
-    document.body.innerHTML = "";
-  }
-}, 1000);
-
-/* ------------------------
-   PLAYER LOGIC
-------------------------- */
-(() => {
-  const title = document.getElementById("title");
-  const player = document.getElementById("player");
-
-  const id = new URLSearchParams(location.search).get("id");
-  if (!id) {
-    title.textContent = "Movie not found";
-    return;
-  }
-
-  const controller = new AbortController();
-
-  fetch(`/api/movie/${id}`, {
-    signal: controller.signal,
-    headers: {
-      "X-Requested-With": "MoviePlayer",
-      "Cache-Control": "no-store"
-    }
-  })
-  .then(r => r.ok ? r.json() : Promise.reject())
-  .then(({ title: t, src }) => {
-    title.textContent = t;
-    player.src = src;
-    player.load();
-  })
-  .catch(() => {
-    title.textContent = "Movie not found";
-  });
-
-  addEventListener("beforeunload", () => controller.abort());
-})();
-</script>
-
-</body>
+<script defer>  
+(() => {  
+  const title = document.getElementById("title");  
+  const player = document.getElementById("player");  
+  
+  const id = new URLSearchParams(location.search).get("id");  
+  if (!id) {  
+    title.textContent = "Movie not found";  
+    return;  
+  }  
+  
+  const controller = new AbortController();  
+  
+  fetch(`/api/movie/${id}`, {  
+    signal: controller.signal,  
+    cache: "force-cache"  
+  })  
+  .then(r => r.ok ? r.json() : Promise.reject())  
+  .then(({ title: t, src }) => {  
+    title.textContent = t;  
+    player.src = src;  
+    player.load();  
+  })  
+  .catch(() => {  
+    title.textContent = "Movie not found";  
+  });  
+  
+  // Stop network if user leaves page  
+  addEventListener("beforeunload", () => controller.abort());  
+})();  
+</script>  </body>  
 </html>

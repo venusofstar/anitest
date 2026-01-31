@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kaiju No. 8 Season 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+html, body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: system-ui, Arial, sans-serif;
+}
+
+header {
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  background: #111;
+  font-weight: bold;
+}
+
+iframe {
+  width: 100%;
+  height: 60vh;
+  border: none;
+  background: #000;
+}
+
+.episodes {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+}
+
+.ep {
+  background: #1c1c1c;
+  padding: 8px 5px;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ep:hover {
+  background: #f1c40f;
+  color: #000;
+}
+
+.ep.active {
+  background: #f1c40f;
+  color: #000;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>Kaiju No. 8 — Season 2</header>
+
+<iframe
+  id="ytPlayer"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
+
+<div class="episodes" id="episodeList"></div>
+
+<script>
+// VIDEO SETUP
+// EP 1–12: same full video (single button)
+// EP 13, 14: separate videos
+
+const videoIds = [
+  "jq8fE-8z_6c", // EP 1–12 FULL video
+  "6cQTOW38",    // EP13
+  "wjpkVmmqmPk"  // EP14
+];
+
+const labels = [
+  "EP 1-12",     // single button for full video
+  "EP 13",
+  "EP 14"
+];
+
+const player = document.getElementById("ytPlayer");
+const list = document.getElementById("episodeList");
+
+function playEpisode(i) {
+  player.src = `https://www.youtube.com/embed/${videoIds[i]}?autoplay=1&rel=0&modestbranding=1`;
+
+  document.querySelectorAll(".ep").forEach((el, idx) => {
+    el.classList.toggle("active", idx === i);
+  });
+}
+
+// Build buttons
+labels.forEach((label, i) => {
+  const btn = document.createElement("div");
+  btn.className = "ep";
+  btn.textContent = label;
+  btn.onclick = () => playEpisode(i);
+  list.appendChild(btn);
+});
+
+// Auto play EP 1-12 by default
+playEpisode(0);
+</script>
+
+</body>
+</html>

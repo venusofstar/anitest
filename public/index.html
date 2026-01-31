@@ -92,16 +92,16 @@ header {
 
   <div class="card" onclick="openMovie('hxhphantom')">
     <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1e/Hunter-x-hunter-phantom-rouge-poster.png/250px-Hunter-x-hunter-phantom-rouge-poster.png">
-    <h3>Hunter × Hunter: Phantom Rouge (Tagalog Dubbed)</h3>
+    <h3>Hunter × Hunter: Phantom Rouge</h3>
   </div>
 
   <div class="card" onclick="openMovie('hxhlastmission')">
     <img src="https://upload.wikimedia.org/wikipedia/en/b/b3/Hunter_x_Hunter_The_Last_Mission_poster.png">
-    <h3>Hunter X Hunter: The Last Mission (Tagalog Dubbed)</h3>
+    <h3>Hunter X Hunter: The Last Mission</h3>
   </div>
 
-  <!-- ✅ NEW MOVIE -->
-  <div class="card" onclick="openYouTube('https://www.youtube.com/watch?v=yqZ8qflYs6c')">
+  <!-- ✅ YOUTUBE MOVIE (EMBEDDED, NO REDIRECT) -->
+  <div class="card" onclick="openYouTubePlayer('yqZ8qflYs6c')">
     <img src="https://upload.wikimedia.org/wikipedia/en/6/6f/The_Bad_Guys_2022_poster.jpg">
     <h3>The Bad Guys (Tagalog Dubbed)</h3>
   </div>
@@ -139,8 +139,8 @@ function openMovie(id) {
   location.href = `movie-player.html?id=${id}`;
 }
 
-function openYouTube(url) {
-  window.open(url, "_blank");
+function openYouTubePlayer(videoId) {
+  location.href = `youtube-player.html?v=${videoId}`;
 }
 </script>
 

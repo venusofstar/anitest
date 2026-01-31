@@ -84,5 +84,28 @@ video {
 })();
 </script>
 
+  <script>
+  // Disable right-click
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    alert("Right-click is disabled on this page.");
+  });
+
+  // Disable certain keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    // F12
+    if (e.key === 'F12') {
+      e.preventDefault();
+    }
+    // Ctrl+Shift+I (DevTools), Ctrl+Shift+J, Ctrl+U (view source)
+    if ((e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
+      e.preventDefault();
+    }
+  });
+
+  // Optional: disable text selection
+  document.addEventListener('selectstart', e => e.preventDefault());
+  </script>
+
 </body>
 </html>
